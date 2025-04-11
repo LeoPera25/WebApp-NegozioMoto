@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Elenco Accessori";
+}
+
+<div class="container my-5">
+    <header class="text-center mb-5">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+        <div class="badge bg-primary fs-5 mb-3">Categoria: Accessori</div>
+    </header>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var Item in @Model.Items)
+        { 
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title mb-0">@Item.tipo</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>Compatibilità:</strong> @Item.compatibilita
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="badge bg-success fs-6">€ @Item.prezzo</span>
+                            <small class="text-muted">ID: @Item.ID_prodotto</small>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="d-grid">
+                            <button class="btn btn-outline-primary">Visualizza elemento</button>
+                            <button class="btn btn-outline-secondary">Aggiungi al carrello</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
