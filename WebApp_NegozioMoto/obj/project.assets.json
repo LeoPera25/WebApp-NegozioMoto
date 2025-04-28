@@ -1671,11 +1671,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\perin\\RiderProjects\\WebApp_NegozioMoto\\WebApp_NegozioMoto\\WebApp_NegozioMoto.csproj",
+      "projectUniqueName": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\WebApp_NegozioMoto.csproj",
       "projectName": "WebApp_NegozioMoto",
-      "projectPath": "C:\\Users\\perin\\RiderProjects\\WebApp_NegozioMoto\\WebApp_NegozioMoto\\WebApp_NegozioMoto.csproj",
+      "projectPath": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\WebApp_NegozioMoto.csproj",
       "packagesPath": "C:\\Users\\perin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\perin\\RiderProjects\\WebApp_NegozioMoto\\WebApp_NegozioMoto\\obj\\",
+      "outputPath": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\perin\\AppData\\Roaming\\NuGet\\NuGet.Config",

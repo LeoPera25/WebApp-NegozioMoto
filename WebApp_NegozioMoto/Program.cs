@@ -5,8 +5,7 @@ builder.Services.AddControllersWithViews();
 //per accedere al HttpContext
 builder.Services.AddHttpContextAccessor();
 //configuriamo i parametri della sessione 
-builder.Services.AddSession(
-    options =>
+builder.Services.AddSession(options =>
     {
         //ptions.IdleTimeout = TimeSpan.FromMinutes(15);//15 secondi di inattività
         options.Cookie.IsEssential = true;
@@ -28,6 +27,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

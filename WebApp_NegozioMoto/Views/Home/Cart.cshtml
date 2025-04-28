@@ -1,16 +1,38 @@
-﻿@{
+﻿@using WebApp_NegozioMoto.Views.Home
+@{
     ViewData["Title"] = "Carrello";
+    List<OrdineProdotto> listaDettaglio = new List<OrdineProdotto>();
+    List<Item> listaArticoli = new List<Item>();
+    OrdineProdotto o;
+
+    foreach (Item i in Model)
+    {
+        if (!listaArticoli.Contains(i))
+        {
+            listaArticoli.Add(i);
+            o = new OrdineProdotto();
+            o.ID_prodotto = i.ID_prodotto;
+            o.ID_ordine = 0;//metto a 0 cuz manca collegamento dell ordine ancora
+            o.Quantita = 1;
+            o.CostoProdotto = i.prezzo;
+            listaDettaglio.Add(o);
+        }
+        else
+        {
+            o = listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto);
+            listaDettaglio.Remove(o);
+            o.Quantita += 1;
+            o.CostoProdotto = i.prezzo * o.Quantita;
+            listaDettaglio.Add(o);
+        }
+    }
 }
+
 <h1>@ViewData["Title"]</h1>
 <hr/>
-<p>id_Categoria   id_Prodotto</p>
-@foreach (var Item in Model)
+@foreach (Item i in listaArticoli)
 {
-    <p>
-        @Item.ID_categoria
-
-        @Item.ID_prodotto
-    </p>
+    <li class="list-group-item"><div align="left">@i.modello</div><div align="right">x @listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).Quantita</div><div align="right">@listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).CostoProdotto €</div></li>
 }
 
 <a class="btn btn-primary" asp-controller="Home" asp-action="EmptyCart"> Elimina Carello</a>

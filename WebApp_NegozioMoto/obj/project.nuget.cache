@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8NfkNhv64p7D3gn57PsusitBSGQ5pMnXWyWGe9PFBl0/UUQfAkNkLUzj5Azwb5VBNY40Clb6JWLOk7BlWEfoxw==",
+  "dgSpecHash": "+2lXkJizXaO6AEmLeXtgb8tDR0wfg+iK/EkiWegPKVIUhFLfQ5Ko0DTUyEDNUkJyBcRUJBKoDbxoMwctcE/uZg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\perin\\RiderProjects\\WebApp_NegozioMoto\\WebApp_NegozioMoto\\WebApp_NegozioMoto.csproj",
+  "projectFilePath": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\WebApp_NegozioMoto.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\perin\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
     "C:\\Users\\perin\\.nuget\\packages\\communitytoolkit.mvvm\\8.3.2\\communitytoolkit.mvvm.8.3.2.nupkg.sha512",

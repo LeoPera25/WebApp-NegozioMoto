@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebApp_NegozioMoto")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6855f09bfe3ed617a674640852fe4d6f643f0b04")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c17d45ce00f9b80e37606c84c99273d4bea60968")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebApp_NegozioMoto")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebApp_NegozioMoto")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
