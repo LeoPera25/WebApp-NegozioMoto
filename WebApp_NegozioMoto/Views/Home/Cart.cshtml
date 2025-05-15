@@ -32,7 +32,7 @@
 <hr/>
 @foreach (Item i in listaArticoli)
 {
-    <li class="list-group-item"><div align="left">@i.modello</div><div align="right">x @listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).Quantita</div><div align="right">@listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).CostoProdotto €</div></li>
+    <li class="list-group-item"><div align="left">@listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).ID_prodotto</div><div align="left">@i.modello</div><div align="right">x @listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).Quantita</div><div align="right">@listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).CostoProdotto €</div></li>
 }
 
 <a class="btn btn-primary" asp-controller="Home" asp-action="EmptyCart"> Elimina Carello</a>

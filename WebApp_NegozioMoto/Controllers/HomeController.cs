@@ -76,8 +76,8 @@ public class HomeController : Controller
     {
         Carrello c = _gestioneSessione.PrendiCarrello();
         c.PulisciCarrello();
-        List<Item> list = c.ListaCarrello.ToList();
-        return View(list);
+        
+        return RedirectToAction("Cart", c.ListaCarrello);
     }
 
     //Visualizza vari elenchi
