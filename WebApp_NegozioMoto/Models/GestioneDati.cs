@@ -61,6 +61,7 @@ public class GestioneDati
                 p.tipo_vestiario = (string)reader["tipo_vestiario"];
                 p.colore = (string)reader["colore"];
                 p.materiale = (string)reader["materiale"];
+                p.ID_categoria = (int)reader["id_categoria"];
                 p.prezzo = (int)reader["prezzo"];
                 
                 prodotti.Add(p);
@@ -85,6 +86,7 @@ public class GestioneDati
                 p.ID_prodotto = (int)reader["id_prodotto"];
                 p.tipo = (string)reader["tipo"];
                 p.compatibilita = (string)reader["compatibilita"];
+                p.ID_categoria = (int)reader["id_categoria"];
                 p.prezzo = (int)reader["prezzo"];
                 
                 prodotti.Add(p);
@@ -102,7 +104,7 @@ public class GestioneDati
         if (idCategoria == 1)
         {
             string query = "SELECT * From moto " +
-                           "inner join categoria on categoria.id_categoria = moto.id_categoria" +
+                           "inner join categoria on categoria.id_categoria = moto.id_categoria " +
                            "where moto.id_prodotto = @idprod";
             
             MySqlCommand cmd = new MySqlCommand(query, con);
@@ -116,14 +118,15 @@ public class GestioneDati
                 i.descrizione = (string)reader["descrizione"];
                 i.marca = (string)reader["marca"];
                 i.modello = (string)reader["modello"];
+                i.prezzo = (int)reader["prezzo"];
             }
             reader.Close();
         }
         else if (idCategoria == 2)
         {
             string query = "SELECT * From abbigliamento " +
-                           "inner join categoria on categoria.id_categoria = abbigliamento.id_categoria" +
-                           "where moto.id_prodotto = @idprod";
+                           "inner join categoria on categoria.id_categoria = abbigliamento.id_categoria " +
+                           "where abbigliamento.id_prodotto = @idprod";
             
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@idprod", idprodotto);
@@ -136,14 +139,15 @@ public class GestioneDati
                 i.descrizione = (string)reader["descrizione"];
                 i.tipo_vestiario = (string)reader["tipo_vestiario"];
                 i.colore = (string)reader["colore"];
+                i.prezzo = (int)reader["prezzo"];
             }
             reader.Close();
         }
-        else if (idCategoria == 2)
+        else if (idCategoria == 3)
         {
             string query = "SELECT * From accessori " +
-                           "inner join categoria on categoria.id_categoria = accessori.id_categoria" +
-                           "where moto.id_prodotto = @idprod";
+                           "inner join categoria on categoria.id_categoria = accessori.id_categoria " +
+                           "where accessori.id_prodotto = @idprod";
             
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@idprod", idprodotto);
@@ -155,11 +159,35 @@ public class GestioneDati
                 i.ID_categoria = (int)reader["id_categoria"];
                 i.tipo = (string)reader["tipo"];
                 i.compatibilita = (string)reader["compatibilita"];
+                i.prezzo = (int)reader["prezzo"];
             }
             reader.Close();
         }
 
         return i;
+    }
+    
+    public bool InserisciUtente(string username, string password, string indirizzo)
+    {
+        try
+        {
+            string query = "INSERT INTO utente (username, password, indirizzo) VALUES (@username, @password, @indirizzo)";
+
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@indirizzo", indirizzo);
+
+            int righeInserite = cmd.ExecuteNonQuery();
+
+            return true; // true se almeno 1 riga inserita
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore: " + ex.Message);
+            // Puoi loggare l'errore qui se vuoi
+            return false;
+        }
     }
 
 }

@@ -1,11 +1,10 @@
 ﻿@using WebApp_NegozioMoto.Views.Home
 @{
     ViewData["Title"] = "Carrello";
-    List<OrdineProdotto> listaDettaglio = new List<OrdineProdotto>();
-    List<Item> listaArticoli = new List<Item>();
+    List<Item> listaArticoli = Model as List<Item>;
     OrdineProdotto o;
 
-    foreach (Item i in Model)
+    /*foreach (Item i in Model)
     {
         if (!listaArticoli.Contains(i))
         {
@@ -25,14 +24,14 @@
             o.CostoProdotto = i.prezzo * o.Quantita;
             listaDettaglio.Add(o);
         }
-    }
+    }*/
 }
 
 <h1>@ViewData["Title"]</h1>
 <hr/>
 @foreach (Item i in listaArticoli)
 {
-    <li class="list-group-item"><div align="left">@listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).ID_prodotto</div><div align="left">@i.modello</div><div align="right">x @listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).Quantita</div><div align="right">@listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto).CostoProdotto €</div></li>
+    <li class="list-group-item"><div align="left">@i.ID_prodotto</div><div align="left">@i.modello</div><div align="left">@i.tipo_vestiario</div><div align="left">@i.tipo</div><div align="right">@i.prezzo €</div></li>
 }
 
 <a class="btn btn-primary" asp-controller="Home" asp-action="EmptyCart"> Elimina Carello</a>

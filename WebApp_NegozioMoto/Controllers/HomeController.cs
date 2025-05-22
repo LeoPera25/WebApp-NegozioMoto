@@ -49,6 +49,26 @@ public class HomeController : Controller
         return View();
     }
 
+    public ActionResult Register()
+    {
+        return View();
+    }
+    
+    [HttpPost]
+    public IActionResult AggiungiUtente(string username, string password, string email)
+    {
+        GestioneDati gestione = new GestioneDati();
+        bool esito = gestione.InserisciUtente(username, password, email);
+
+        if (esito)
+            return RedirectToAction("Login");
+        else
+        {
+            ViewBag.Errore = "Registrazione fallita. Riprova.";
+            return View("Register");
+        }
+    }
+
     // Pagina Home del sito
     public ActionResult Home()
     {
