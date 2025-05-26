@@ -2,36 +2,107 @@
 @{
     ViewData["Title"] = "Carrello";
     List<Item> listaArticoli = Model as List<Item>;
-    OrdineProdotto o;
 
-    /*foreach (Item i in Model)
-    {
-        if (!listaArticoli.Contains(i))
+    // Raggruppa articoli per ID_prodotto
+    var articoliRaggruppati = listaArticoli
+        .GroupBy(i => new { i.ID_prodotto, i.ID_categoria })
+        .Select(g => new
         {
-            listaArticoli.Add(i);
-            o = new OrdineProdotto();
-            o.ID_prodotto = i.ID_prodotto;
-            o.ID_ordine = 0;//metto a 0 cuz manca collegamento dell ordine ancora
-            o.Quantita = 1;
-            o.CostoProdotto = i.prezzo;
-            listaDettaglio.Add(o);
-        }
-        else
-        {
-            o = listaDettaglio.Find(x => x.ID_prodotto == i.ID_prodotto);
-            listaDettaglio.Remove(o);
-            o.Quantita += 1;
-            o.CostoProdotto = i.prezzo * o.Quantita;
-            listaDettaglio.Add(o);
-        }
-    }*/
+            Prodotto = g.First(),
+            Quantità = g.Count()
+        })
+        .ToList();
+
+
+    var costoTotale = articoliRaggruppati.Sum(g => g.Prodotto.prezzo * g.Quantità);
 }
 
 <h1>@ViewData["Title"]</h1>
-<hr/>
-@foreach (Item i in listaArticoli)
-{
-    <li class="list-group-item"><div align="left">@i.ID_prodotto</div><div align="left">@i.modello</div><div align="left">@i.tipo_vestiario</div><div align="left">@i.tipo</div><div align="right">@i.prezzo €</div></li>
-}
+<hr />
 
-<a class="btn btn-primary" asp-controller="Home" asp-action="EmptyCart"> Elimina Carello</a>
+@if (articoliRaggruppati.Count == 0)
+{
+    <p>Il carrello è vuoto.</p>
+}
+else
+{
+    <div class="row">
+        <!-- Colonna principale con i prodotti -->
+        <div class="col-md-8">
+            <ul class="list-group">
+                @foreach (var gruppo in articoliRaggruppati)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <!-- Immagine del prodotto -->
+                            <img src="~/FOTOMOTO/@gruppo.Prodotto.foto" alt="Immagine prodotto" style="width: 80px; height: auto; margin-right: 15px;" />
+
+                            <!-- Info prodotto -->
+                            <div>
+                                @if (gruppo.Prodotto.ID_categoria == 1)
+                                {
+                                    <strong>@gruppo.Prodotto.modello</strong><br />
+                                }
+                                else if (gruppo.Prodotto.ID_categoria == 2)
+                                {
+                                    <strong>@gruppo.Prodotto.tipo_vestiario</strong><br />
+                                }
+                                else if (gruppo.Prodotto.ID_categoria == 3)
+                                {
+                                    <strong>@gruppo.Prodotto.tipo</strong><br />
+                                }
+
+                                Prezzo: @gruppo.Prodotto.prezzo €<br />
+                                Quantità: @gruppo.Quantità
+                            </div>
+                        </div>
+
+                        <!-- Bottone Rimuovi -->
+                        <form asp-controller="Home" asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="id" value="@gruppo.Prodotto.ID_prodotto" />
+                            <button class="btn btn-danger">Rimuovi uno</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+            <br />
+            <a class="btn btn-warning" asp-controller="Home" asp-action="EmptyCart">Svuota Carrello</a>
+        </div>
+
+        <!-- Colonna laterale con il riepilogo -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Riepilogo ordine</strong>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        @foreach (var gruppo in articoliRaggruppati)
+                        {
+                            if (gruppo.Prodotto.ID_categoria == 1)
+                            {
+                                <li>@gruppo.Quantità x @gruppo.Prodotto.modello</li>
+                            }
+                            else if (gruppo.Prodotto.ID_categoria == 2)
+                            {
+                                <li>@gruppo.Quantità x @gruppo.Prodotto.tipo_vestiario</li>
+                            }
+                            else if (gruppo.Prodotto.ID_categoria == 3)
+                            {
+                                <li>@gruppo.Quantità x @gruppo.Prodotto.tipo</li>
+                            }
+                            
+                        }
+                    </ul>
+                    <hr />
+                    <p><strong>Totale: @costoTotale €</strong></p>
+
+                    <!-- Pulsante Procedi all'acquisto -->
+                    <form asp-controller="Home" asp-action="Checkout" method="post">
+                        <button class="btn btn-success btn-block w-100">Procedi all'acquisto</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

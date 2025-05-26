@@ -11,7 +11,6 @@ public class GestioneSessione
     public GestioneSessione(ISession sessione)
     {
         this.sessione = sessione;
-        
     }
     public Carrello PrendiCarrello()
     {

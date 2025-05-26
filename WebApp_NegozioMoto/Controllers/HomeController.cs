@@ -109,6 +109,7 @@ public class HomeController : Controller
         List<Item> list = c.ListaCarrello.ToList();
         return View(list);
     }
+    
     public IActionResult EmptyCart()
     {
         Carrello c = _gestioneSessione.PrendiCarrello();
@@ -116,6 +117,50 @@ public class HomeController : Controller
         
         return RedirectToAction("Cart", c.ListaCarrello);
     }
+    
+    [HttpPost]
+    public IActionResult RemoveFromCart(int id)
+    {
+        Carrello c = _gestioneSessione.PrendiCarrello();
+
+        // Cerca l'item da rimuovere in base a id_prodotto
+        var itemDaRimuovere = c.ListaCarrello.FirstOrDefault(i => i.ID_prodotto == id);
+        if (itemDaRimuovere != null)
+        {
+            c.ListaCarrello.Remove(itemDaRimuovere);
+        }
+
+        _gestioneSessione.SalvaCarrello(c);
+
+        return RedirectToAction("Cart", c.ListaCarrello);
+    }
+    
+    [HttpPost]
+    public IActionResult Checkout()
+    {
+        Carrello carrello = _gestioneSessione.PrendiCarrello();
+
+        if (carrello == null || carrello.ListaCarrello == null || !carrello.ListaCarrello.Any())
+        {
+            TempData["MessaggioErrore"] = "Il carrello è vuoto.";
+            return RedirectToAction("Cart");
+        }
+
+        // Passa la lista ListaCarrello alla vista come Model
+        return View(carrello.ListaCarrello);
+    }
+
+
+    [HttpPost]
+    public IActionResult ConfermaOrdine(string Nome, string Email, string Indirizzo)
+    {
+        // Salva ordine, invia email, svuota carrello ecc...
+        ViewBag.Nome = Nome;
+        return View("OrdineCompletato");
+    }
+
+
+
 
     //Visualizza vari elenchi
     public IActionResult ElencoMoto()

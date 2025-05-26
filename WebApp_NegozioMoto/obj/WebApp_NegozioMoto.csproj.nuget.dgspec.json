@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[8.3.2, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.12.1, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[9.2.0, )"

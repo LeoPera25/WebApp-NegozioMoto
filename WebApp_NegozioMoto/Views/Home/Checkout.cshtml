@@ -1,0 +1,129 @@
+﻿@model List<Item>
+@{
+    ViewData["Title"] = "Checkout";
+
+    var articoliRaggruppati = Model
+        .GroupBy(i => new { i.ID_prodotto, i.ID_categoria }) // Distinzione per ID_categoria
+        .Select(g => new
+        {
+            Prodotto = g.First(),
+            Quantità = g.Count()
+        })
+        .ToList();
+
+    var costoTotale = articoliRaggruppati.Sum(g => g.Prodotto.prezzo * g.Quantità);
+}
+
+
+<h1 class="mb-4">Checkout</h1>
+
+<div class="row">
+    <!-- Colonna sinistra: Riepilogo Ordine -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Riepilogo ordine
+            </div>
+            <div class="card-body">
+                <ul class="list-group mb-3">
+                    @foreach (var gruppo in articoliRaggruppati)
+                    {
+                        <li class="list-group-item d-flex justify-content-between">
+                            <div>
+                                @if (gruppo.Prodotto.ID_categoria == 1)
+                                {
+                                    <h6 class="my-0">@gruppo.Prodotto.modello</h6>
+                                    <small class="text-muted">Quantità: @gruppo.Quantità</small>
+                                }
+                                else if (gruppo.Prodotto.ID_categoria == 2)
+                                {
+                                    <h6 class="my-0">@gruppo.Prodotto.tipo_vestiario</h6>
+                                    <small class="text-muted">Quantità: @gruppo.Quantità</small>
+                                }
+                                else if (gruppo.Prodotto.ID_categoria == 3)
+                                {
+                                    <h6 class="my-0">@gruppo.Prodotto.tipo</h6>
+                                    <small class="text-muted">Quantità: @gruppo.Quantità</small>
+                                }
+                            </div>
+                            <span class="text-muted">@($"{gruppo.Prodotto.prezzo * gruppo.Quantità:0.00}") €</span>
+                        </li>
+                    }
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Totale</strong>
+                        <strong>@($"{costoTotale:0.00}") €</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Colonna destra: Dati Cliente -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                Dati cliente
+            </div>
+            <div class="card-body">
+                <form asp-controller="Home" asp-action="ConfermaOrdine" method="post">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome completo</label>
+                        <input type="text" class="form-control" id="nome" name="Nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="indirizzo" class="form-label">Indirizzo di spedizione</label>
+                        <textarea class="form-control" id="indirizzo" name="Indirizzo" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100" >Conferma Ordine</button>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Metodo di pagamento</label>
+                        <select class="form-select" id="metodoPagamento" name="MetodoPagamento" required onchange="mostraCampiPagamento()">
+                            <option value="">-- Seleziona un metodo --</option>
+                            <option value="Carta">Carta di Credito / Debito</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Contrassegno">Pagamento alla consegna</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Dati carta -->
+                    <div id="datiCarta" style="display: none;">
+                        <div class="mb-3">
+                            <label for="numeroCarta" class="form-label">Numero Carta</label>
+                            <input type="text" class="form-control" id="numeroCarta" name="NumeroCarta" maxlength="19" placeholder="0000 0000 0000 0000">
+                        </div>
+                        <div class="mb-3">
+                            <label for="scadenza" class="form-label">Data di scadenza</label>
+                            <input type="month" class="form-control" id="scadenza" name="ScadenzaCarta">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cvv" name="CVV" maxlength="4" placeholder="123">
+                        </div>
+                    </div>
+                    
+                    <!-- Info PayPal -->
+                    <div id="datiPayPal" style="display: none;">
+                        <div class="mb-3">
+                            <label for="emailPayPal" class="form-label">Email PayPal</label>
+                            <input type="email" class="form-control" id="emailPayPal" name="EmailPayPal" placeholder="esempio@email.com">
+                        </div>
+                    </div>
+                    
+                    <!-- Contrassegno: Nessun dato aggiuntivo richiesto -->
+                    <script>
+                        function mostraCampiPagamento() {
+                            var metodo = document.getElementById("metodoPagamento").value;
+                            document.getElementById("datiCarta").style.display = (metodo === "Carta") ? "block" : "none";
+                            document.getElementById("datiPayPal").style.display = (metodo === "PayPal") ? "block" : "none";
+                        }
+                    </script>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

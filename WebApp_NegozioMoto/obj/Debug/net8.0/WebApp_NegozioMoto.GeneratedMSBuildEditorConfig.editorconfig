@@ -23,6 +23,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/Checkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGVja291dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/ElencoAbbigliamento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbGVuY29BYmJpZ2xpYW1lbnRvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -53,6 +57,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/NotFound.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOb3RGb3VuZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/OrdineCompletato.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxPcmRpbmVDb21wbGV0YXRvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/Privacy.cshtml]

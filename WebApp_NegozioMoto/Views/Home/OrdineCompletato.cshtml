@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Ordine completato";
+    var nomeCliente = ViewBag.Nome as string ?? "Cliente";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 border-0">
+        <div class="card-body text-center p-5">
+            <h1 class="text-success mb-4">🎉 Ordine completato con successo!</h1>
+            <h3 class="mb-3">Grazie per il tuo ordine, <strong>@nomeCliente</strong>!</h3>
+            <p class="lead mb-4">
+                Non è necessario aspettare il corriere davanti alla porta di casa...<br />
+                Con noi, il corriere arriva direttamente nel <strong>tuo salotto</strong>!<br/>
+                (grazie Denis per il rischio preso)
+            </p>
+
+            <div class="mt-4">
+                <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="Index">
+                    Torna alla home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
