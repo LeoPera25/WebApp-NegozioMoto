@@ -24,6 +24,9 @@
                             <span class="badge bg-secondary">@Item.materiale</span>
                             <span>@Item.colore</span>
                         </div>
+                        <div class="text-center my-3">
+                            <img src="~/FOTOMOTO/@Item.foto" alt="@Item.modello" class="img-fluid rounded" style="max-height: 250px; object-fit: cover;">
+                            </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="badge bg-success fs-6">€ @Item.prezzo</span>
                             <small class="text-muted">ID: @Item.ID_prodotto</small>
@@ -31,7 +34,6 @@
                     </div>
                     <div class="card-footer bg-white border-top-0">
                         <div class="d-grid gap-2">
-                            <a class="btn btn-link text-secondary">Visualizza elemento</a>
                             <a class="btn btn-outline-primary" asp-action="AggiungiAlCarrello"
                                asp-route-idCat="@Item.ID_categoria"
                                asp-route-idProd="@Item.ID_prodotto">Aggiungi al carrello</a>

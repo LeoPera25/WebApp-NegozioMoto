@@ -36,6 +36,7 @@ public class GestioneDati
                 p.modello = (string)reader["modello"];
                 p.ID_categoria = (int)reader["id_categoria"];
                 p.prezzo = (int)reader["prezzo"];
+                p.foto = (string)reader["foto"];
             
                 prodotti.Add(p);
             }
@@ -63,6 +64,7 @@ public class GestioneDati
                 p.materiale = (string)reader["materiale"];
                 p.ID_categoria = (int)reader["id_categoria"];
                 p.prezzo = (int)reader["prezzo"];
+                p.foto = (string)reader["foto"];
                 
                 prodotti.Add(p);
             }
@@ -88,6 +90,7 @@ public class GestioneDati
                 p.compatibilita = (string)reader["compatibilita"];
                 p.ID_categoria = (int)reader["id_categoria"];
                 p.prezzo = (int)reader["prezzo"];
+                p.foto = (string)reader["foto"];
                 
                 prodotti.Add(p);
             }
@@ -119,6 +122,7 @@ public class GestioneDati
                 i.marca = (string)reader["marca"];
                 i.modello = (string)reader["modello"];
                 i.prezzo = (int)reader["prezzo"];
+                i.foto = (string)reader["foto"];
             }
             reader.Close();
         }
@@ -140,6 +144,7 @@ public class GestioneDati
                 i.tipo_vestiario = (string)reader["tipo_vestiario"];
                 i.colore = (string)reader["colore"];
                 i.prezzo = (int)reader["prezzo"];
+                i.foto = (string)reader["foto"];
             }
             reader.Close();
         }
@@ -160,6 +165,7 @@ public class GestioneDati
                 i.tipo = (string)reader["tipo"];
                 i.compatibilita = (string)reader["compatibilita"];
                 i.prezzo = (int)reader["prezzo"];
+                i.foto = (string)reader["foto"];
             }
             reader.Close();
         }
@@ -186,6 +192,28 @@ public class GestioneDati
         {
             Console.WriteLine("Errore: " + ex.Message);
             // Puoi loggare l'errore qui se vuoi
+            return false;
+        }
+    }
+    
+    public bool LoginUtente(string username, string password)
+    {
+        try
+        {
+            string query = "SELECT * FROM utente WHERE username = @username AND password = @password";
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
+
+            object result = cmd.ExecuteScalar();
+
+            int count = Convert.ToInt32(result);
+
+            return count > 0;  // true se esiste almeno un utente
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore login: " + ex.Message);
             return false;
         }
     }

@@ -48,6 +48,23 @@ public class HomeController : Controller
         // Qui potrai aggiungere eventuale logica di autenticazione
         return View();
     }
+    
+    public IActionResult Login(string username, string password)
+    {
+        GestioneDati dati = new GestioneDati();
+        bool esito = dati.LoginUtente(username, password);
+
+        if (esito)
+        {
+            // Login riuscito: puoi impostare un cookie o una sessione
+            return RedirectToAction("Home", "Home");
+        }
+        else
+        {
+            ViewBag.Errore = "Username o password non validi";
+            return View();
+        }
+    }
 
     public ActionResult Register()
     {

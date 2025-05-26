@@ -25,6 +25,14 @@
       "PackagePath": "staticwebassets\\FOTOMOTO\\TutaPelle2.jpg"
     },
     {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\borselaterali.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\borselaterali.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\casco1.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\casco1.jpg"
+    },
+    {
       "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\cb1000.jpg",
       "PackagePath": "staticwebassets\\FOTOMOTO\\cb1000.jpg"
     },
@@ -41,16 +49,96 @@
       "PackagePath": "staticwebassets\\FOTOMOTO\\crf450.jpg"
     },
     {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\cupolinomaggiorato.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\cupolinomaggiorato.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\duke890.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\duke890.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\giaccablupelle.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\giaccablupelle.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\giaccagiallatrasp.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\giaccagiallatrasp.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\giaccanerapelle.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\giaccanerapelle.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\giaccarossapelle.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\giaccarossapelle.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\giaccarossatrasp.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\giaccarossatrasp.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\giaccaverdepelle.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\giaccaverdepelle.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\gilet.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\gilet.jpg"
+    },
+    {
       "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\gs1300.jpg",
       "PackagePath": "staticwebassets\\FOTOMOTO\\gs1300.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\gsxr750.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\gsxr750.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\guantisport.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\guantisport.jpg"
     },
     {
       "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\m1000r.jpg",
       "PackagePath": "staticwebassets\\FOTOMOTO\\m1000r.jpg"
     },
     {
-      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\mt07.jpg",
-      "PackagePath": "staticwebassets\\FOTOMOTO\\mt07.jpg"
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\manrisc.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\manrisc.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\mt07.png",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\mt07.png"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\mvbrt910.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\mvbrt910.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\nav.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\nav.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\ninja650.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\ninja650.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\occhialisole.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\occhialisole.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\pantablacktec.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\pantablacktec.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\pantablacktec2.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\pantablacktec2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\pantagreytec.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\pantagreytec.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\paraschiena.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\paraschiena.jpg"
     },
     {
       "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\rs660.jpg",
@@ -59,6 +147,18 @@
     {
       "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\s1000rr.jpg",
       "PackagePath": "staticwebassets\\FOTOMOTO\\s1000rr.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\stivalisport.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\stivalisport.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\strt765rs.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\strt765rs.jpg"
+    },
+    {
+      "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\FOTOMOTO\\v2.jpg",
+      "PackagePath": "staticwebassets\\FOTOMOTO\\v2.jpg"
     },
     {
       "Id": "C:\\Users\\perin\\Documents\\WebApp-NegozioMoto\\WebApp_NegozioMoto\\wwwroot\\css\\site.css",
