@@ -154,7 +154,9 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult ConfermaOrdine(string Nome, string Email, string Indirizzo)
     {
-        // Salva ordine, invia email, svuota carrello ecc...
+        Carrello c = _gestioneSessione.PrendiCarrello();
+        gestione.CreaOrdine(Nome,Email,Indirizzo,c.ListaCarrello);
+        c.PulisciCarrello();
         ViewBag.Nome = Nome;
         return View("OrdineCompletato");
     }

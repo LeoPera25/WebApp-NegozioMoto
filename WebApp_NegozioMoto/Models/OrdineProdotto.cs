@@ -4,6 +4,6 @@ public class OrdineProdotto
 {
     public int ID_prodotto;
     public int ID_ordine;
-    public int CostoProdotto;
+    public int ID_categoria;
     public int Quantita;
 }

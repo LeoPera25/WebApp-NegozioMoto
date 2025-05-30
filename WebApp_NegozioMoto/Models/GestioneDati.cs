@@ -1,3 +1,5 @@
+using WebApp_NegozioMoto.Models;
+
 namespace WebApp_NegozioMoto.Views.Home;
 using MySql.Data.MySqlClient;
 
@@ -215,6 +217,52 @@ public class GestioneDati
         {
             Console.WriteLine("Errore login: " + ex.Message);
             return false;
+        }
+    }
+
+    public void CreaOrdine(string utente, string indirizzo, string mail, List<Item> prodotti)
+    {
+        {
+            try
+            {
+                // 1. Inserisci l'ordine
+                string insertOrdine = "INSERT INTO ordine (utente, indirizzo, mail) VALUES (@utente, @indirizzo, @mail)";
+                var cmdOrdine = new MySqlCommand(insertOrdine, con);
+                cmdOrdine.Parameters.AddWithValue("@utente", utente);
+                cmdOrdine.Parameters.AddWithValue("@indirizzo", indirizzo);
+                cmdOrdine.Parameters.AddWithValue("@mail", mail);
+                cmdOrdine.ExecuteNonQuery();
+
+                // 2. Recupera l'id_ordine generato
+                long idOrdine = cmdOrdine.LastInsertedId;
+
+                // Raggruppa articoli per ID_prodotto
+                var articoliRaggruppati = prodotti
+                    .GroupBy(i => new { i.ID_prodotto, i.ID_categoria })
+                    .Select(g => new
+                    {
+                        Prodotto = g.First(),
+                        Quantità = g.Count()
+                    })
+                    .ToList();
+                // 3. Inserisci i prodotti dell’ordine
+                string insertProdotto = @"INSERT INTO ordine_prodotto (id_ordine, id_prodotto, id_categoria, quantita) 
+                                      VALUES (@id_ordine, @id_prodotto, @id_categoria, @quantita)";
+
+                foreach (var p in articoliRaggruppati)
+                {
+                    var cmdProdotto = new MySqlCommand(insertProdotto, con);
+                    cmdProdotto.Parameters.AddWithValue("@id_ordine", idOrdine);
+                    cmdProdotto.Parameters.AddWithValue("@id_prodotto", p.Prodotto.ID_prodotto);
+                    cmdProdotto.Parameters.AddWithValue("@id_categoria", p.Prodotto.ID_categoria);
+                    cmdProdotto.Parameters.AddWithValue("@quantita", p.Quantità);
+                    cmdProdotto.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Errore durante la creazione dell'ordine: " + ex.Message);
+            }
         }
     }
 
