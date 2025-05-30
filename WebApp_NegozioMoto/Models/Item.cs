@@ -6,8 +6,8 @@ public class Item
     public int ID_categoria { get; set; }
     public string descrizione { get; set; }
     public int prezzo { get; set; }
-    
     public string foto { get; set; }
+    public int totOrdinati { get; set; }
     
     //Attributi Moto
     

@@ -13,7 +13,7 @@ public class GestioneDati
         con = new MySqlConnection(s);
         con.Open();
     }
-    
+
     public List<Item> RecuperaTuttiIProdottiDiUnaCategoria(int idCategoria)
     {
         List<Item> prodotti = new List<Item>();
@@ -27,7 +27,7 @@ public class GestioneDati
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@id", idCategoria);
             MySqlDataReader reader = cmd.ExecuteReader();
-            
+
 
             while (reader.Read())
             {
@@ -39,9 +39,10 @@ public class GestioneDati
                 p.ID_categoria = (int)reader["id_categoria"];
                 p.prezzo = (int)reader["prezzo"];
                 p.foto = (string)reader["foto"];
-            
+
                 prodotti.Add(p);
             }
+
             reader.Close();
         }
         //if per elenco abbigliamento
@@ -54,7 +55,7 @@ public class GestioneDati
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@id", idCategoria);
             MySqlDataReader reader = cmd.ExecuteReader();
-            
+
 
             while (reader.Read())
             {
@@ -67,9 +68,10 @@ public class GestioneDati
                 p.ID_categoria = (int)reader["id_categoria"];
                 p.prezzo = (int)reader["prezzo"];
                 p.foto = (string)reader["foto"];
-                
+
                 prodotti.Add(p);
             }
+
             reader.Close();
         }
         //if per elenco accessori
@@ -82,7 +84,7 @@ public class GestioneDati
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@id", idCategoria);
             MySqlDataReader reader = cmd.ExecuteReader();
-            
+
 
             while (reader.Read())
             {
@@ -93,29 +95,30 @@ public class GestioneDati
                 p.ID_categoria = (int)reader["id_categoria"];
                 p.prezzo = (int)reader["prezzo"];
                 p.foto = (string)reader["foto"];
-                
+
                 prodotti.Add(p);
             }
+
             reader.Close();
         }
-        
+
         return prodotti;
     }
 
-    public Item RecuperaItem(int idprodotto,int idCategoria)
+    public Item RecuperaItem(int idprodotto, int idCategoria)
     {
         Item i = new Item();
-        
+
         if (idCategoria == 1)
         {
             string query = "SELECT * From moto " +
                            "inner join categoria on categoria.id_categoria = moto.id_categoria " +
                            "where moto.id_prodotto = @idprod";
-            
+
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@idprod", idprodotto);
             MySqlDataReader reader = cmd.ExecuteReader();
-            
+
             while (reader.Read())
             {
                 i.ID_prodotto = (int)reader["id_prodotto"];
@@ -126,6 +129,7 @@ public class GestioneDati
                 i.prezzo = (int)reader["prezzo"];
                 i.foto = (string)reader["foto"];
             }
+
             reader.Close();
         }
         else if (idCategoria == 2)
@@ -133,11 +137,11 @@ public class GestioneDati
             string query = "SELECT * From abbigliamento " +
                            "inner join categoria on categoria.id_categoria = abbigliamento.id_categoria " +
                            "where abbigliamento.id_prodotto = @idprod";
-            
+
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@idprod", idprodotto);
             MySqlDataReader reader = cmd.ExecuteReader();
-            
+
             while (reader.Read())
             {
                 i.ID_prodotto = (int)reader["id_prodotto"];
@@ -148,6 +152,7 @@ public class GestioneDati
                 i.prezzo = (int)reader["prezzo"];
                 i.foto = (string)reader["foto"];
             }
+
             reader.Close();
         }
         else if (idCategoria == 3)
@@ -155,11 +160,11 @@ public class GestioneDati
             string query = "SELECT * From accessori " +
                            "inner join categoria on categoria.id_categoria = accessori.id_categoria " +
                            "where accessori.id_prodotto = @idprod";
-            
+
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@idprod", idprodotto);
             MySqlDataReader reader = cmd.ExecuteReader();
-            
+
             while (reader.Read())
             {
                 i.ID_prodotto = (int)reader["id_prodotto"];
@@ -169,17 +174,19 @@ public class GestioneDati
                 i.prezzo = (int)reader["prezzo"];
                 i.foto = (string)reader["foto"];
             }
+
             reader.Close();
         }
 
         return i;
     }
-    
+
     public bool InserisciUtente(string username, string password, string indirizzo)
     {
         try
         {
-            string query = "INSERT INTO utente (username, password, indirizzo) VALUES (@username, @password, @indirizzo)";
+            string query =
+                "INSERT INTO utente (username, password, indirizzo) VALUES (@username, @password, @indirizzo)";
 
             MySqlCommand cmd = new MySqlCommand(query, con);
             cmd.Parameters.AddWithValue("@username", username);
@@ -197,7 +204,7 @@ public class GestioneDati
             return false;
         }
     }
-    
+
     public bool LoginUtente(string username, string password)
     {
         try
@@ -211,7 +218,7 @@ public class GestioneDati
 
             int count = Convert.ToInt32(result);
 
-            return count > 0;  // true se esiste almeno un utente
+            return count > 0; // true se esiste almeno un utente
         }
         catch (Exception ex)
         {
@@ -226,7 +233,8 @@ public class GestioneDati
             try
             {
                 // 1. Inserisci l'ordine
-                string insertOrdine = "INSERT INTO ordine (utente, indirizzo, mail) VALUES (@utente, @indirizzo, @mail)";
+                string insertOrdine =
+                    "INSERT INTO ordine (utente, indirizzo, mail) VALUES (@utente, @indirizzo, @mail)";
                 var cmdOrdine = new MySqlCommand(insertOrdine, con);
                 cmdOrdine.Parameters.AddWithValue("@utente", utente);
                 cmdOrdine.Parameters.AddWithValue("@indirizzo", indirizzo);
@@ -266,4 +274,112 @@ public class GestioneDati
         }
     }
 
+    public void AggiornaAssociazioniProdottiConPercentuale(List<Item> prodotti)
+    {
+        for (int i = 0; i < prodotti.Count; i++)
+        {
+            for (int j = i + 1; j < prodotti.Count; j++)
+            {
+                var a = prodotti[i];
+                var b = prodotti[j];
+
+                int cat1, cat2;
+                int id1, id2;
+
+                if (a.ID_categoria < b.ID_categoria ||
+                    (a.ID_categoria == b.ID_categoria && a.ID_prodotto < b.ID_prodotto))
+                {
+                    cat1 = a.ID_categoria;
+                    id1 = a.ID_prodotto;
+                    cat2 = b.ID_categoria;
+                    id2 = b.ID_prodotto;
+                }
+                else
+                {
+                    cat1 = b.ID_categoria;
+                    id1 = b.ID_prodotto;
+                    cat2 = a.ID_categoria;
+                    id2 = a.ID_prodotto;
+                }
+
+                // 1. Inserisci o aggiorna la frequenza della coppia
+                string q = @"
+                INSERT INTO prodotto_associazione (categoria1, id_prodotto1, categoria2, id_prodotto2, frequenza)
+                VALUES (@cat1, @id1, @cat2, @id2, 1)
+                ON DUPLICATE KEY UPDATE frequenza = frequenza + 1";
+
+                using (var cmd = new MySqlCommand(q, con))
+                {
+                    cmd.Parameters.AddWithValue("@cat1", cat1);
+                    cmd.Parameters.AddWithValue("@id1", id1);
+                    cmd.Parameters.AddWithValue("@cat2", cat2);
+                    cmd.Parameters.AddWithValue("@id2", id2);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // 2. Recupera Tot_ordinati del prodotto di riferimento
+                string tabellaTot = cat1 switch
+                {
+                    1 => "moto",
+                    2 => "abbigliamento",
+                    3 => "accessori",
+                    _ => throw new Exception("Categoria non valida")
+                };
+
+                string queryTot = $"SELECT Tot_ordinati FROM {tabellaTot} WHERE id_prodotto = @id1";
+                int totOrdinati = 1;
+
+                using (var cmd = new MySqlCommand(queryTot, con))
+                {
+                    cmd.Parameters.AddWithValue("@id1", id1);
+                    var result = cmd.ExecuteScalar();
+                    if (result != null) totOrdinati = Convert.ToInt32(result);
+                }
+
+                // 3. Aggiorna la percentuale (basata su frequenza e Tot_ordinati)
+                string updatePercentuale = @"
+                UPDATE prodotto_associazione
+                SET percentuale = ROUND((frequenza / @tot) * 100, 2)
+                WHERE categoria1 = @cat1 AND id_prodotto1 = @id1 AND categoria2 = @cat2 AND id_prodotto2 = @id2";
+
+                using (var cmd = new MySqlCommand(updatePercentuale, con))
+                {
+                    cmd.Parameters.AddWithValue("@cat1", cat1);
+                    cmd.Parameters.AddWithValue("@id1", id1);
+                    cmd.Parameters.AddWithValue("@cat2", cat2);
+                    cmd.Parameters.AddWithValue("@id2", id2);
+                    cmd.Parameters.AddWithValue("@tot", totOrdinati);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+    }
+
+    public void AggiornaTotOrdiniPerProdotti(List<Item> prodotti)
+    {
+        foreach (var prodotto in prodotti)
+        {
+            string nomeTabella = prodotto.ID_categoria switch
+            {
+                1 => "moto",
+                2 => "abbigliamento",
+                3 => "accessori",
+                _ => throw new ArgumentException($"Categoria non valida: {prodotto.ID_categoria}")
+            };
+
+            string query = $@"
+                UPDATE {nomeTabella}
+                SET Tot_ordinati = Tot_ordinati + 1
+                WHERE id_prodotto = @id_prodotto;
+            ";
+
+            using (var command = new MySqlCommand(query, con))
+            {
+                command.Parameters.AddWithValue("@id_prodotto", prodotto.ID_prodotto);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+    
+    
 }

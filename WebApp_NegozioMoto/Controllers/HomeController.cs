@@ -156,6 +156,8 @@ public class HomeController : Controller
     {
         Carrello c = _gestioneSessione.PrendiCarrello();
         gestione.CreaOrdine(Nome,Email,Indirizzo,c.ListaCarrello);
+        gestione.AggiornaTotOrdiniPerProdotti(c.ListaCarrello);
+        gestione.AggiornaAssociazioniProdottiConPercentuale(c.ListaCarrello);
         c.PulisciCarrello();
         ViewBag.Nome = Nome;
         return View("OrdineCompletato");
