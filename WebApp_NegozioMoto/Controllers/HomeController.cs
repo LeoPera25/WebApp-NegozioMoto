@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using NToastNotify;
 using WebApp_NegozioMoto.Models;
 using WebApp_NegozioMoto.Views.Home;
 
@@ -12,13 +14,15 @@ public class HomeController : Controller
 
     private GestioneDati gestione;
     private GestioneSessione _gestioneSessione;
+    private readonly IToastNotification _toastNotification;
     private IConfiguration _conf;
 
-    public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, IConfiguration config)
+    public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor,IToastNotification toastNotification, IConfiguration config)
     {
         _logger = logger;
         _session = httpContextAccessor.HttpContext.Session;
         _conf = config;
+        _toastNotification = toastNotification;
         
         if (!_session.Keys.Contains("contatore"))
         {
@@ -101,20 +105,50 @@ public class HomeController : Controller
         Carrello c = _gestioneSessione.PrendiCarrello();
         c.AggiungiItem(i);
         _gestioneSessione.SalvaCarrello(c);
-        return RedirectToAction("Cart");
+        _toastNotification.AddSuccessToastMessage("Elemento aggiunto al carrello");
+        if (idCat==1)
+        {
+            return RedirectToAction("ElencoMoto");
+        }
+        else if (idCat==2)
+        {
+            return RedirectToAction("ElencoAbbigliamento");
+        }
+        else if (idCat == 3)
+        {
+            return RedirectToAction("ElencoAccessori");
+        }
+        else
+        {
+            return RedirectToAction("Home");
+        }
     }
     public IActionResult Cart()
     {
         Carrello c = _gestioneSessione.PrendiCarrello();
-        List<Item> list = c.ListaCarrello.ToList();
-        return View(list);
+        List<Item> carrelloOriginale = c.ListaCarrello;
+
+        List<(int categoria, int idProdotto)> carrelloPerSuggerimenti = carrelloOriginale
+            .Select(item => (item.ID_categoria, item.ID_prodotto))
+            .ToList();
+
+        List<Item> suggeriti = gestione.SuggerisciProdottiAssociati(carrelloPerSuggerimenti);
+
+        var model = new CarrelloViewModel
+        {
+            Carrello = carrelloOriginale,
+            Suggeriti = suggeriti
+        };
+
+        return View(model);
     }
+
     
     public IActionResult EmptyCart()
     {
         Carrello c = _gestioneSessione.PrendiCarrello();
         c.PulisciCarrello();
-        
+        _gestioneSessione.SalvaCarrello(c);
         return RedirectToAction("Cart", c.ListaCarrello);
     }
     
@@ -129,9 +163,8 @@ public class HomeController : Controller
         {
             c.ListaCarrello.Remove(itemDaRimuovere);
         }
-
         _gestioneSessione.SalvaCarrello(c);
-
+        _toastNotification.AddSuccessToastMessage("Elemento rimosso dal carrello");
         return RedirectToAction("Cart", c.ListaCarrello);
     }
     
@@ -160,6 +193,8 @@ public class HomeController : Controller
         gestione.AggiornaAssociazioniProdottiConPercentuale(c.ListaCarrello);
         c.PulisciCarrello();
         ViewBag.Nome = Nome;
+        _gestioneSessione.SalvaCarrello(c);
+        _toastNotification.AddSuccessToastMessage("Ordine confermato");
         return View("OrdineCompletato");
     }
 

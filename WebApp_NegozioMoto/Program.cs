@@ -11,6 +11,8 @@ builder.Services.AddSession(options =>
         options.Cookie.IsEssential = true;
     });
 
+builder.Services.AddControllersWithViews().AddNToastNotifyToastr();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

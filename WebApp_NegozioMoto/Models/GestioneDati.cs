@@ -181,6 +181,36 @@ public class GestioneDati
         return i;
     }
 
+    public List<Item> TrovaGruppoSuggerimenti(List<(int categoria, int idProdotto)> ids)
+    {
+        var items = new List<Item>();
+
+        foreach (var (categoria, idProdotto) in ids)
+        {
+            string query =
+                "SELECT ID_categoria, ID_prodotto, descrizione, prezzo, foto FROM prodotti WHERE ID_categoria = @cat AND ID_prodotto = @id";
+            using var cmd = new MySqlCommand(query, con);
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@cat", categoria);
+            cmd.Parameters.AddWithValue("@id", idProdotto);
+
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                items.Add(new Item
+                {
+                    ID_categoria = reader.GetInt32("ID_categoria"),
+                    ID_prodotto = reader.GetInt32("ID_prodotto"),
+                    descrizione = reader.GetString("descrizione"),
+                    prezzo = reader.GetInt32("prezzo"),
+                    foto = reader.GetString("foto")
+                });
+            }
+        }
+
+        return items;
+    }
+
     public bool InserisciUtente(string username, string password, string indirizzo)
     {
         try
@@ -380,6 +410,83 @@ public class GestioneDati
             }
         }
     }
-    
-    
+
+    public List<Item> SuggerisciProdottiAssociati(List<(int categoria, int idProdotto)> carrello, int topN = 4)
+    {
+        var suggerimenti = new Dictionary<(int categoria, int idProdotto), double>();
+
+        foreach (var (categoria, idProdotto) in carrello)
+        {
+            string query = @"
+            SELECT categoria2 AS categoria, id_prodotto2 AS id, frequenza
+            FROM prodotto_associazione
+            WHERE categoria1 = @cat AND id_prodotto1 = @id
+            UNION ALL
+            SELECT categoria1 AS categoria, id_prodotto1 AS id, frequenza
+            FROM prodotto_associazione
+            WHERE categoria2 = @cat AND id_prodotto2 = @id";
+
+            using var cmd = new MySqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@cat", categoria);
+            cmd.Parameters.AddWithValue("@id", idProdotto);
+
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int catSuggerito = reader.GetInt32("categoria");
+                int idSuggerito = reader.GetInt32("id");
+                double freq = reader.GetDouble("frequenza");
+
+                var chiave = (catSuggerito, idSuggerito);
+                if (!carrello.Contains(chiave))
+                    suggerimenti[chiave] = suggerimenti.GetValueOrDefault(chiave, 0) + freq;
+            }
+        }
+
+        var topChiavi = suggerimenti
+            .OrderByDescending(kv => kv.Value)
+            .Take(topN)
+            .Select(kv => kv.Key)
+            .ToList();
+
+        var risultati = new List<Item>();
+        foreach (var (categoria, idProdotto) in topChiavi)
+        {
+            string query;
+            if (categoria == 1)
+            {
+                query =
+                    "SELECT ID_categoria, ID_prodotto, prezzo, foto FROM moto WHERE ID_categoria = @cat AND ID_prodotto = @id";
+            }
+            else if (categoria == 2)
+            {
+                query =
+                    "SELECT ID_categoria, ID_prodotto, prezzo, foto FROM abbigliamento WHERE ID_categoria = @cat AND ID_prodotto = @id";
+            }
+            else
+            {
+                query =
+                    "SELECT ID_categoria, ID_prodotto, prezzo, foto FROM accessori WHERE ID_categoria = @cat AND ID_prodotto = @id";
+            }
+
+            using var cmd = new MySqlCommand(query, con);
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@cat", categoria);
+            cmd.Parameters.AddWithValue("@id", idProdotto);
+
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                risultati.Add(new Item
+                {
+                    ID_categoria = reader.GetInt32("ID_categoria"),
+                    ID_prodotto = reader.GetInt32("ID_prodotto"),
+                    prezzo = reader.GetInt32("prezzo"),
+                    foto = reader.GetString("foto")
+                });
+            }
+        }
+
+        return risultati;
+    }
 }

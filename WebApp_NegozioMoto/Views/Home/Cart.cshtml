@@ -1,8 +1,8 @@
 ﻿@using WebApp_NegozioMoto.Views.Home
 @{
     ViewData["Title"] = "Carrello";
-    List<Item> listaArticoli = Model as List<Item>;
-
+    List<Item> listaArticoli = Model.Carrello;
+    
     // Raggruppa articoli per ID_prodotto
     var articoliRaggruppati = listaArticoli
         .GroupBy(i => new { i.ID_prodotto, i.ID_categoria })
@@ -105,4 +105,39 @@ else
             </div>
         </div>
     </div>
-}
+    
+        <hr />
+        <h3>Ti potrebbero interessare anche:</h3>
+        <div class="row">
+            @foreach (var suggerito in Model.Suggeriti)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <img src="~/FOTOMOTO/@suggerito.foto" class="card-img-top" alt="@suggerito.descrizione" style="height: 150px; object-fit: cover;" />
+                        <div class="card-body">
+                            @if (suggerito.ID_categoria == 1)
+                            {
+                                <h5 class="card-title">@suggerito.modello</h5>
+                            }
+                            else if (suggerito.ID_categoria == 2)
+                            {
+                                <h5 class="card-title">@suggerito.tipo_vestiario</h5>
+                            }
+                            else if (suggerito.ID_categoria == 3)
+                            {
+                                <h5 class="card-title">@suggerito.tipo</h5>
+                            }
+
+                            <p class="card-text">Prezzo: @suggerito.prezzo €</p>
+
+                            <form asp-controller="Home" asp-action="AggiungiAlCarrello" method="post">
+                                <input type="hidden" name="id" value="@suggerito.ID_prodotto" />
+                                <input type="hidden" name="categoria" value="@suggerito.ID_categoria" />
+                                <button class="btn btn-primary w-100">Aggiungi al carrello</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
