@@ -117,24 +117,22 @@ else
                         <div class="card-body">
                             @if (suggerito.ID_categoria == 1)
                             {
-                                <h5 class="card-title">@suggerito.modello</h5>
+                                <h5 class="card-title">@suggerito.marca @suggerito.modello</h5>
                             }
                             else if (suggerito.ID_categoria == 2)
                             {
-                                <h5 class="card-title">@suggerito.tipo_vestiario</h5>
+                                <h5 class="card-title">@suggerito.tipo_vestiario @suggerito.materiale</h5>
+                                <p> @suggerito.colore</p>
                             }
                             else if (suggerito.ID_categoria == 3)
                             {
                                 <h5 class="card-title">@suggerito.tipo</h5>
                             }
-
                             <p class="card-text">Prezzo: @suggerito.prezzo €</p>
 
-                            <form asp-controller="Home" asp-action="AggiungiAlCarrello" method="post">
-                                <input type="hidden" name="id" value="@suggerito.ID_prodotto" />
-                                <input type="hidden" name="categoria" value="@suggerito.ID_categoria" />
-                                <button class="btn btn-primary w-100">Aggiungi al carrello</button>
-                            </form>
+                            <a class="btn btn-outline-primary" asp-action="AggiungiAlCarrello"
+                               asp-route-idCat="@suggerito.ID_categoria"
+                               asp-route-idProd="@suggerito.ID_prodotto">Aggiungi al carrello</a>
                         </div>
                     </div>
                 </div>

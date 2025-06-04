@@ -180,36 +180,7 @@ public class GestioneDati
 
         return i;
     }
-
-    public List<Item> TrovaGruppoSuggerimenti(List<(int categoria, int idProdotto)> ids)
-    {
-        var items = new List<Item>();
-
-        foreach (var (categoria, idProdotto) in ids)
-        {
-            string query =
-                "SELECT ID_categoria, ID_prodotto, descrizione, prezzo, foto FROM prodotti WHERE ID_categoria = @cat AND ID_prodotto = @id";
-            using var cmd = new MySqlCommand(query, con);
-            cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@cat", categoria);
-            cmd.Parameters.AddWithValue("@id", idProdotto);
-
-            using var reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                items.Add(new Item
-                {
-                    ID_categoria = reader.GetInt32("ID_categoria"),
-                    ID_prodotto = reader.GetInt32("ID_prodotto"),
-                    descrizione = reader.GetString("descrizione"),
-                    prezzo = reader.GetInt32("prezzo"),
-                    foto = reader.GetString("foto")
-                });
-            }
-        }
-
-        return items;
-    }
+    
 
     public bool InserisciUtente(string username, string password, string indirizzo)
     {
@@ -456,37 +427,74 @@ public class GestioneDati
             if (categoria == 1)
             {
                 query =
-                    "SELECT ID_categoria, ID_prodotto, prezzo, foto FROM moto WHERE ID_categoria = @cat AND ID_prodotto = @id";
+                    "SELECT ID_categoria, ID_prodotto, prezzo,modello,marca, foto FROM moto WHERE ID_categoria = @cat AND ID_prodotto = @id";
+                using var cmd = new MySqlCommand(query, con);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@cat", categoria);
+                cmd.Parameters.AddWithValue("@id", idProdotto);
+
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    risultati.Add(new Item
+                    {
+                        ID_categoria = reader.GetInt32("ID_categoria"),
+                        ID_prodotto = reader.GetInt32("ID_prodotto"),
+                        marca = reader.GetString("marca"),
+                        modello = reader.GetString("modello"),
+                        prezzo = reader.GetInt32("prezzo"),
+                        foto = reader.GetString("foto")
+                    });
+                }
             }
             else if (categoria == 2)
             {
                 query =
-                    "SELECT ID_categoria, ID_prodotto, prezzo, foto FROM abbigliamento WHERE ID_categoria = @cat AND ID_prodotto = @id";
+                    "SELECT ID_categoria, ID_prodotto, prezzo,tipo_vestiario,materiale,colore, foto FROM abbigliamento WHERE ID_categoria = @cat AND ID_prodotto = @id";
+                using var cmd = new MySqlCommand(query, con);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@cat", categoria);
+                cmd.Parameters.AddWithValue("@id", idProdotto);
+
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    risultati.Add(new Item
+                    {
+                        ID_categoria = reader.GetInt32("ID_categoria"),
+                        ID_prodotto = reader.GetInt32("ID_prodotto"),
+                        tipo_vestiario = reader.GetString("tipo_vestiario"),
+                        materiale = reader.GetString("materiale"),
+                        colore = reader.GetString("colore"),
+                        prezzo = reader.GetInt32("prezzo"),
+                        foto = reader.GetString("foto")
+                    });
+                }
             }
             else
             {
                 query =
-                    "SELECT ID_categoria, ID_prodotto, prezzo, foto FROM accessori WHERE ID_categoria = @cat AND ID_prodotto = @id";
-            }
+                    "SELECT ID_categoria, ID_prodotto, prezzo,tipo, foto FROM accessori WHERE ID_categoria = @cat AND ID_prodotto = @id";
+                using var cmd = new MySqlCommand(query, con);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@cat", categoria);
+                cmd.Parameters.AddWithValue("@id", idProdotto);
 
-            using var cmd = new MySqlCommand(query, con);
-            cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@cat", categoria);
-            cmd.Parameters.AddWithValue("@id", idProdotto);
-
-            using var reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                risultati.Add(new Item
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
                 {
-                    ID_categoria = reader.GetInt32("ID_categoria"),
-                    ID_prodotto = reader.GetInt32("ID_prodotto"),
-                    prezzo = reader.GetInt32("prezzo"),
-                    foto = reader.GetString("foto")
-                });
+                    risultati.Add(new Item
+                    {
+                        ID_categoria = reader.GetInt32("ID_categoria"),
+                        ID_prodotto = reader.GetInt32("ID_prodotto"),
+                        tipo = reader.GetString("tipo"),
+                        prezzo = reader.GetInt32("prezzo"),
+                        foto = reader.GetString("foto")
+                    });
+                }
             }
+            
         }
-
         return risultati;
     }
 }

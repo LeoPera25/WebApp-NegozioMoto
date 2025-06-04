@@ -99,6 +99,15 @@ public class HomeController : Controller
 
     // Pagina per Gestire il carrello dell'utente
     
+    /*public IActionResult AggiungiAlCarrello(int idProd, int idCat)
+    {
+        Item i = gestione.RecuperaItem(idProd, idCat);
+        Carrello c = _gestioneSessione.PrendiCarrello();
+        c.AggiungiItem(i);
+        _gestioneSessione.SalvaCarrello(c);
+        _toastNotification.AddSuccessToastMessage("Elemento aggiunto al carrello");
+        return Ok();
+    }*/
     public IActionResult AggiungiAlCarrello(int idProd, int idCat)
     {
         Item i = gestione.RecuperaItem(idProd, idCat);
@@ -106,21 +115,19 @@ public class HomeController : Controller
         c.AggiungiItem(i);
         _gestioneSessione.SalvaCarrello(c);
         _toastNotification.AddSuccessToastMessage("Elemento aggiunto al carrello");
-        if (idCat==1)
+
+        // Ottieni l'URL della pagina precedente dall'header "Referer"
+        string refererUrl = Request.Headers["Referer"].ToString();
+    
+        // Se l'header è presente, redirect alla pagina precedente
+        if (!string.IsNullOrEmpty(refererUrl))
         {
-            return RedirectToAction("ElencoMoto");
-        }
-        else if (idCat==2)
-        {
-            return RedirectToAction("ElencoAbbigliamento");
-        }
-        else if (idCat == 3)
-        {
-            return RedirectToAction("ElencoAccessori");
+            return Redirect(refererUrl);
         }
         else
         {
-            return RedirectToAction("Home");
+            // Fallback a un'azione di default (es. homepage)
+            return RedirectToAction("Index", "Home");
         }
     }
     public IActionResult Cart()
