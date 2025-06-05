@@ -19,12 +19,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\perin\Documents\WebApp-NegozioMoto\WebApp_NegozioMoto
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/AdminPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pblBhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/Cart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/Checkout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGVja291dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/Dettaglio.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXR0YWdsaW8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/ElencoAbbigliamento.cshtml]
@@ -37,6 +45,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/ElencoMoto.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbGVuY29Nb3RvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/ElencoOrdini.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbGVuY29PcmRpbmkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/EmptyCart.cshtml]

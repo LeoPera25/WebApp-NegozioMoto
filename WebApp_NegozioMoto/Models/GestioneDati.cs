@@ -497,4 +497,102 @@ public class GestioneDati
         }
         return risultati;
     }
+    
+    // Aggiunge una moto al database
+    public bool AggiungiMoto(string marca, string modello, int cilindrata, string descrizione, int prezzo, string foto)
+{
+    try
+    {
+        string query = @"INSERT INTO moto 
+                        (id_categoria, marca, modello, cilindrata, descrizione, prezzo, foto) 
+                        VALUES 
+                        (1, @marca, @modello, @cilindrata, @descrizione, @prezzo, @foto)";
+
+        MySqlCommand cmd = new MySqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@marca", marca);
+        cmd.Parameters.AddWithValue("@modello", modello);
+        cmd.Parameters.AddWithValue("@cilindrata", cilindrata);
+        cmd.Parameters.AddWithValue("@descrizione", descrizione);
+        cmd.Parameters.AddWithValue("@prezzo", prezzo);
+        cmd.Parameters.AddWithValue("@foto", foto);
+
+        int righeInserite = cmd.ExecuteNonQuery();
+        return righeInserite > 0;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Errore inserimento moto: " + ex.Message);
+        return false;
+    }
+}
+
+    // Aggiunge un abbigliamento al database
+    public bool AggiungiAbbigliamento(string tipo_Vestiario, string colore, string materiale, string descrizione, int prezzo, string foto)
+{
+    try
+    {
+        string query = @"INSERT INTO abbigliamento 
+                        (id_categoria, tipo_vestiario, colore, materiale, descrizione, prezzo, foto) 
+                        VALUES 
+                        (2, @tipo, @colore, @materiale, @descrizione, @prezzo, @foto)";
+
+        MySqlCommand cmd = new MySqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@tipo", tipo_Vestiario);
+        cmd.Parameters.AddWithValue("@colore", colore);
+        cmd.Parameters.AddWithValue("@materiale", materiale);
+        cmd.Parameters.AddWithValue("@descrizione", descrizione);
+        cmd.Parameters.AddWithValue("@prezzo", prezzo);
+        cmd.Parameters.AddWithValue("@foto", foto);
+
+        int righeInserite = cmd.ExecuteNonQuery();
+        return righeInserite > 0;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Errore inserimento abbigliamento: " + ex.Message);
+        return false;
+    }
+}
+
+    // Aggiunge un accessorio al database
+    public bool AggiungiAccessorio(string tipo, string compatibilita, string descrizione, int prezzo, string foto)
+{
+    try
+    {
+        string query = @"INSERT INTO accessori 
+                        (id_categoria, tipo, compatibilita, descrizione, prezzo, foto) 
+                        VALUES 
+                        (3, @tipo, @compatibilita, @descrizione, @prezzo, @foto)";
+
+        MySqlCommand cmd = new MySqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@tipo", tipo);
+        cmd.Parameters.AddWithValue("@compatibilita", compatibilita);
+        cmd.Parameters.AddWithValue("@descrizione", descrizione);
+        cmd.Parameters.AddWithValue("@prezzo", prezzo);
+        cmd.Parameters.AddWithValue("@foto", foto);
+
+        int righeInserite = cmd.ExecuteNonQuery();
+        return righeInserite > 0;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Errore inserimento accessorio: " + ex.Message);
+        return false;
+    }
+}
+    
+    /*
+    public List<OrdineStatisticaViewModel> ElencoOrdini(List<OrdineProdotto> listaOrdini)
+    {
+        var ordini = listaOrdini;
+
+        var cmd = new MySqlCommand("SELECT DISTINCT id_ordine FROM ordine_prodotto", con);
+        using var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            ordini.Add(new OrdineProdotto { ID_ordine = reader.GetInt32(0) });
+        }
+
+        return ordini;
+    }*/
 }

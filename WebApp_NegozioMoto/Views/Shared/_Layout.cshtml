@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var isAdmin = HttpContextAccessor.HttpContext?.Session.GetString("IsAdmin") == "true";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -14,14 +20,14 @@
             font-weight: 700;
             letter-spacing: 1px;
         }
-        
+
         .category-buttons {
             padding: 2rem 0;
             background-color: #f8f9fa;
             border-radius: 8px;
             margin-bottom: 2rem;
         }
-        
+
         .category-button {
             padding: 12px 25px;
             margin: 0 10px;
@@ -29,24 +35,24 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-        
+
         .btn-moto {
             background-color: #dc3545;
             border-color: #dc3545;
         }
-        
+
         .btn-abbigliamento {
             background-color: #17a2b8;
             border-color: #17a2b8;
         }
-        
+
         .btn-accessori {
             background-color: #28a745;
             border-color: #28a745;
         }
-        
+
         .hero-section {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/api/placeholder/1200/400');
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
             background-size: cover;
             background-position: center;
             padding: 100px 0;
@@ -54,13 +60,13 @@
             color: white;
             text-align: center;
         }
-        
+
         .footer {
             padding: 25px 0;
             background-color: #212529;
             color: white !important;
         }
-        
+
         .footer a {
             color: #adb5bd;
         }
@@ -70,31 +76,43 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left side of navbar -->
+                <!-- Left side -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
                     </li>
                 </ul>
-                
-                <!-- Center brand logo -->
+
+                <!-- Center brand -->
                 <a class="navbar-brand mx-auto" asp-area="" asp-controller="Home" asp-action="Home">MotoVeloce</a>
+
+                <!-- Right side -->
                 
-                <!-- Right side of navbar -->
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user me-1"></i> Account
+                            <i class="fas fa-user me-1"></i> @(isAdmin ? "Admin" : "Account")
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Login">Login</a></li>
-                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Register">Registrati</a></li>
+                            @if (isAdmin)
+                            {
+                                @if (isAdmin)
+                                {
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="PaginaAdmin">Inserisci Prodotti nel database</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" >Storico Ordini</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Login">Login</a></li>
+                            }
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Il mio profilo</a></li>
                         </ul>
@@ -119,7 +137,7 @@
                 <p class="lead mb-4">La tua destinazione per moto, abbigliamento e accessori di qualità</p>
             </div>
         </div>
-        
+
         <div class="container text-center category-buttons">
             <h2 class="mb-4">Esplora le nostre categorie</h2>
             <div class="d-flex justify-content-center flex-wrap">
@@ -135,7 +153,7 @@
             </div>
         </div>
     }
-    
+
     <main role="main" class="container pb-5">
         @RenderBody()
     </main>
@@ -153,12 +171,11 @@
             </div>
             <div class="col-auto">
                 <span class="me-2"><i class="fas fa-envelope"></i> info@motoveloce.it</span>
-                <span><i class="fas fa-phone"></i> +39 02 1234567</span>
+                <span><i class="fas fa-phone"></i> +39 331 290 0160</span>
             </div>
         </div>
     </div>
 </footer>
-
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

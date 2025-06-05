@@ -47,32 +47,37 @@ public class HomeController : Controller
 //Aggiunto-----------------------------------------------------------  
 
     // Pagina di login
-    public ActionResult Login()
-    {
-        // Qui potrai aggiungere eventuale logica di autenticazione
-        return View();
-    }
-    
     public IActionResult Login(string username, string password)
     {
         GestioneDati dati = new GestioneDati();
         bool esito = dati.LoginUtente(username, password);
 
-        if (esito)
+        if (esito) // o qualsiasi criterio usi per riconoscere l'admin
         {
-            // Login riuscito: puoi impostare un cookie o una sessione
-            return RedirectToAction("Home", "Home");
+            HttpContext.Session.SetString("IsAdmin", "true");
+            _toastNotification.AddSuccessToastMessage("Login effettuato come Admin");
+            return View("Home");
         }
         else
         {
             ViewBag.Errore = "Username o password non validi";
+            _toastNotification.AddSuccessToastMessage("Username o password non validi");
             return View();
         }
     }
 
-    public ActionResult Register()
+    public IActionResult PaginaAdmin()
     {
-        return View();
+        return View("AdminPage");
+    }
+
+    public IActionResult Logout()
+    {
+        // Cancella tutte le chiavi della sessione
+        HttpContext.Session.Clear();
+
+        // Reindirizza alla homepage (o dove preferisci)
+        return RedirectToAction("Home", "Home");
     }
     
     [HttpPost]
@@ -89,7 +94,45 @@ public class HomeController : Controller
             return View("Register");
         }
     }
+    
+    //funzioni admin
+    
+    /*public IActionResult ElencoOrdini()
+    {
+        var ordini = List<OrdineProdotto>();
+        ordini = gestione.ElencoOrdini(ordini);
 
+        return View(ordini);
+    }
+    public IActionResult Dettaglio(int id)
+    {
+        var prodotti = new List<Prodotto>();
+        using var conn = new MySqlConnection(connString);
+        conn.Open();
+
+        var cmd = new MySqlCommand("SELECT id_prodotto, id_categoria, quantita FROM ordine_prodotto WHERE id_ordine = @id", conn);
+        cmd.Parameters.AddWithValue("@id", id);
+        using var reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            prodotti.Add(new Prodotto
+            {
+                IdProdotto = reader.GetInt32(0),
+                IdCategoria = reader.GetInt32(1),
+                Quantita = reader.GetInt32(2)
+            });
+        }
+
+        var dettaglio = new OrdineDettaglio
+        {
+            IdOrdine = id,
+            Prodotti = prodotti
+        };
+
+        return View(dettaglio);
+    }
+*/
     // Pagina Home del sito
     public ActionResult Home()
     {
@@ -99,15 +142,6 @@ public class HomeController : Controller
 
     // Pagina per Gestire il carrello dell'utente
     
-    /*public IActionResult AggiungiAlCarrello(int idProd, int idCat)
-    {
-        Item i = gestione.RecuperaItem(idProd, idCat);
-        Carrello c = _gestioneSessione.PrendiCarrello();
-        c.AggiungiItem(i);
-        _gestioneSessione.SalvaCarrello(c);
-        _toastNotification.AddSuccessToastMessage("Elemento aggiunto al carrello");
-        return Ok();
-    }*/
     public IActionResult AggiungiAlCarrello(int idProd, int idCat)
     {
         Item i = gestione.RecuperaItem(idProd, idCat);
@@ -254,7 +288,27 @@ public class HomeController : Controller
         }
     }
     
-    
+    //aggiungere vari elementi
+    public IActionResult AggiungiMoto(string marca, string modello, int cilindrata, string descrizione, int prezzo, string foto)
+    {
+        gestione.AggiungiMoto(marca, modello, cilindrata, descrizione, prezzo, foto);
+        _toastNotification.AddSuccessToastMessage("Articolo inserito con successo");
+        return View("Home");
+    }
+
+    public IActionResult AggiungiAbbigliamento(string tipoVestiario, string colore, string materiale, string descrizione, int prezzo, string foto)
+    {
+        gestione.AggiungiAbbigliamento(tipoVestiario, colore, materiale, descrizione, prezzo, foto);
+        _toastNotification.AddSuccessToastMessage("Articolo inserito con successo");
+        return View("Home");
+    }
+
+    public IActionResult AggiungiAccessori(string tipo, string compatibilita, string descrizione, int prezzo, string foto)
+    {
+        gestione.AggiungiAccessorio(tipo, compatibilita, descrizione, prezzo, foto);
+        _toastNotification.AddSuccessToastMessage("Articolo inserito con successo");
+        return View("Home");
+    }
     
     
     //Errore-----------------------------------------------------------------------------
