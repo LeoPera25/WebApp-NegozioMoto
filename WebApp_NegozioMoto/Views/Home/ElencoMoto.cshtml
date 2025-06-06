@@ -1,38 +1,42 @@
-﻿@{
+﻿@model dynamic
+@{
     ViewData["Title"] = "Elenco Moto";
+    bool isAdmin = ViewBag.isAdmin ?? false;
 }
 
 <div class="container my-5">
-    <header class="text-center mb-5">
-        <h1 class="display-4">@ViewData["Title"]</h1>
-        <div class="badge bg-danger fs-5 mb-3">Categoria: Moto</div>
-    </header>
-
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
     <div class="row row-cols-1 row-cols-md-2 g-4">
-        @foreach (Item Item in @Model.Items)
-        { 
+        @foreach (var item in Model.Items)
+        {
             <div class="col">
                 <div class="card h-100 shadow-sm">
                     <div class="card-header bg-light">
-                        <h5 class="card-title mb-0">@Item.marca @Item.modello</h5>
+                        <h5 class="card-title mb-0">@item.marca @item.modello</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">@Item.descrizione</p>
+                        <p class="card-text">@item.descrizione</p>
                         <div class="text-center my-3">
-                            <img src="~/FOTOMOTO/@Item.foto" alt="@Item.modello" class="img-fluid rounded" style="max-height: 250px; object-fit: cover;">
+                            <img src="~/FOTOMOTO/@item.foto" alt="@item.modello" class="img-fluid rounded" style="max-height: 250px; object-fit: cover;">
                         </div>
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="badge bg-success fs-6">€ @Item.prezzo</span>
-                            <small class="text-muted">ID: @Item.ID_prodotto</small>
+                        <div class="d-flex justify-content-between">
+                            <span class="badge bg-success fs-6">€ @item.prezzo</span>
+                            <small>ID: @item.ID_prodotto</small>
                         </div>
                     </div>
-
-                    <div class="card-footer bg-white border-top-0">
+                    <div class="card-footer bg-white">
                         <div class="d-grid gap-2">
-                            <a class="btn btn-outline-primary" asp-action="AggiungiAlCarrello"
-                               asp-route-idCat="@Item.ID_categoria"
-                               asp-route-idProd="@Item.ID_prodotto">Aggiungi al carrello</a>
-                            
+                            @if (isAdmin)
+                            {
+                                <a class="btn btn-warning" asp-action="ModificaMoto" asp-route-id="@item.ID_prodotto">Modifica</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-outline-primary" asp-action="AggiungiAlCarrello"
+                                   asp-route-idCat="@item.ID_categoria" asp-route-idProd="@item.ID_prodotto">
+                                   Aggiungi al carrello
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>

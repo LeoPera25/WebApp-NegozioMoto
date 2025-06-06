@@ -47,10 +47,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbGVuY29Nb3RvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/ElencoOrdini.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbGVuY29PcmRpbmkuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/EmptyCart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFbXB0eUNhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -67,6 +63,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/ModificaAbbigliamento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNb2RpZmljYUFiYmlnbGlhbWVudG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/ModificaAccessorio.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNb2RpZmljYUFjY2Vzc29yaW8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/ModificaMoto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNb2RpZmljYU1vdG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/NotFound.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOb3RGb3VuZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -81,6 +89,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Home/StoricoOrdini.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdG9yaWNvT3JkaW5pLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/perin/Documents/WebApp-NegozioMoto/WebApp_NegozioMoto/Views/Shared/Error.cshtml]

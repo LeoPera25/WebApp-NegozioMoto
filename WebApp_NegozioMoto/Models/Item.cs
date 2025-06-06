@@ -13,6 +13,7 @@ public class Item
     
     public string modello { get; set; }
     public string marca { get; set; }
+    public int cilindrata { get; set; }
     
     //Attributi Abbigliamento
     public string tipo_vestiario { get; set; }

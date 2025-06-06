@@ -54,7 +54,9 @@ public class HomeController : Controller
 
         if (esito) // o qualsiasi criterio usi per riconoscere l'admin
         {
-            HttpContext.Session.SetString("IsAdmin", "true");
+            //HttpContext.Session.SetString("IsAdmin", "true");
+            HttpContext.Session.SetString("Ruolo", "admin");
+
             _toastNotification.AddSuccessToastMessage("Login effettuato come Admin");
             return View("Home");
         }
@@ -79,7 +81,22 @@ public class HomeController : Controller
         // Reindirizza alla homepage (o dove preferisci)
         return RedirectToAction("Home", "Home");
     }
+
+    public IActionResult StoricoOrdini()
+    {
+        var orders = gestione.GetOrders();
+        return View(orders); // Passa la lista direttamente alla vista
+    }
     
+    public IActionResult Dettaglio(int id)
+    {
+        var dettagli = gestione.GetDettagliOrdine(id);
+
+        if (dettagli == null || dettagli.Count == 0)
+            return NotFound();
+
+        return View(dettagli);
+    }
     [HttpPost]
     public IActionResult AggiungiUtente(string username, string password, string email)
     {
@@ -96,6 +113,60 @@ public class HomeController : Controller
     }
     
     //funzioni admin
+    
+    [HttpGet]
+    public IActionResult ModificaMoto(int id)
+    {
+        var item = gestione.RecuperaItem(id, 1); // Categoria 1 = Moto
+        if (item == null) return NotFound();
+        return View(item);
+    }
+
+
+    [HttpPost]
+    public IActionResult SalvaModificheMoto(Item moto)
+    {
+        bool success = gestione.AggiornaMoto(moto);
+        if (success)
+        {
+            return RedirectToAction("ElencoMoto");
+        }
+
+        else
+        {
+            return View("ModificaMoto", moto);
+        }
+            
+    }
+
+    [HttpGet]
+    public IActionResult ModificaAbbigliamento(int id)
+    {
+        var item = gestione.RecuperaItem(id , 2);
+        if (item == null || item.ID_categoria != 2) return NotFound();
+        return View(item);
+    }
+
+    [HttpPost]
+    public IActionResult SalvaModificheAbbigliamento(Item vest)
+    {
+        bool success = gestione.AggiornaAbbigliamento(vest);
+        return success ? RedirectToAction("ElencoAbbigliamento") : View("ModificaAbbigliamento", vest);
+    }
+    [HttpGet]
+    public IActionResult ModificaAccessorio(int id)
+    {
+        var item = gestione.RecuperaItem(id , 3);
+        if (item == null || item.ID_categoria != 3) return NotFound();
+        return View(item);
+    }
+
+    [HttpPost]
+    public IActionResult SalvaModificheAccessorio(Item acc)
+    {
+        bool success = gestione.AggiornaAccessorio(acc);
+        return success ? RedirectToAction("ElencoAccessori") : View("ModificaAccessorio", acc);
+    }
     
     /*public IActionResult ElencoOrdini()
     {
@@ -245,6 +316,8 @@ public class HomeController : Controller
     //Visualizza vari elenchi
     public IActionResult ElencoMoto()
     {
+        ViewBag.isAdmin = HttpContext.Session.GetString("Ruolo") == "admin";
+        
         Categoria c = new Categoria();
         List<Item> elementi = gestione.RecuperaTuttiIProdottiDiUnaCategoria(1);
         c.Items = elementi.ToList();

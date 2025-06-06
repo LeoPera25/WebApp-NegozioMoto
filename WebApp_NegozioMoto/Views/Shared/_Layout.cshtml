@@ -5,15 +5,18 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - MotoVeloce</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/WebApp_NegozioMoto.styles.css" asp-append-version="true"/>
+
     <style>
         .navbar-brand {
             font-size: 1.8rem;
@@ -76,49 +79,55 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
         <div class="container">
+            <!-- Hamburger per mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- Contenuto navbar -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left side -->
+
+                <!-- Sinistra -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
                     </li>
                 </ul>
 
-                <!-- Center brand -->
+                <!-- Centro -->
                 <a class="navbar-brand mx-auto" asp-area="" asp-controller="Home" asp-action="Home">MotoVeloce</a>
 
-                <!-- Right side -->
-                
+                <!-- Destra -->
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user me-1"></i> @(isAdmin ? "Admin" : "Account")
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            @if (isAdmin)
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            @if (Context.Session.GetString("Ruolo") == "admin")
                             {
-                                @if (isAdmin)
-                                {
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="PaginaAdmin">Inserisci Prodotti nel database</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" >Storico Ordini</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a></li>
-                                }
+                                <i class="fas fa-user me-1">Admin</i> 
                             }
                             else
                             {
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Login">Login</a></li>
+                                <i class="fas fa-user me-1">Account</i>
                             }
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Il mio profilo</a></li>
+                            
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            @if (Context.Session.GetString("Ruolo")=="admin")
+                            {
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="PaginaAdmin">Inserisci Prodotti nel database</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="StoricoOrdini">Storico Ordini</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                            }
+                            else
+                            {
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Login">Login</a></li>
+                            }
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Cart">
+                        <a class="nav-link" asp-controller="Home" asp-action="Cart">
                             <i class="fas fa-shopping-cart me-1"></i> Carrello
                         </a>
                     </li>
@@ -128,36 +137,35 @@
     </nav>
 </header>
 
-<div>
-    @if (ViewData["Title"]?.ToString() == "Home" || string.IsNullOrEmpty(ViewData["Title"]?.ToString()))
-    {
-        <div class="hero-section">
-            <div class="container">
-                <h1 class="display-3">Benvenuti in MotoVeloce</h1>
-                <p class="lead mb-4">La tua destinazione per moto, abbigliamento e accessori di qualità</p>
-            </div>
+<!-- Hero + Categorie solo nella Home -->
+@if (ViewData["Title"]?.ToString() == "Home" || string.IsNullOrEmpty(ViewData["Title"]?.ToString()))
+{
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="display-3">Benvenuti in MotoVeloce</h1>
+            <p class="lead mb-4">La tua destinazione per moto, abbigliamento e accessori di qualità</p>
         </div>
+    </div>
 
-        <div class="container text-center category-buttons">
-            <h2 class="mb-4">Esplora le nostre categorie</h2>
-            <div class="d-flex justify-content-center flex-wrap">
-                <a asp-area="" asp-controller="Home" asp-action="ElencoMoto" class="btn btn-primary category-button btn-moto">
-                    <i class="fas fa-motorcycle me-2"></i>Moto
-                </a>
-                <a asp-area="" asp-controller="Home" asp-action="ElencoAbbigliamento" class="btn btn-primary category-button btn-abbigliamento">
-                    <i class="fas fa-tshirt me-2"></i>Abbigliamento
-                </a>
-                <a asp-area="" asp-controller="Home" asp-action="ElencoAccessori" class="btn btn-primary category-button btn-accessori">
-                    <i class="fas fa-helmet-safety me-2"></i>Accessori
-                </a>
-            </div>
+    <div class="container text-center category-buttons">
+        <h2 class="mb-4">Esplora le nostre categorie</h2>
+        <div class="d-flex justify-content-center flex-wrap">
+            <a asp-controller="Home" asp-action="ElencoMoto" class="btn btn-primary category-button btn-moto">
+                <i class="fas fa-motorcycle me-2"></i>Moto
+            </a>
+            <a asp-controller="Home" asp-action="ElencoAbbigliamento" class="btn btn-primary category-button btn-abbigliamento">
+                <i class="fas fa-tshirt me-2"></i>Abbigliamento
+            </a>
+            <a asp-controller="Home" asp-action="ElencoAccessori" class="btn btn-primary category-button btn-accessori">
+                <i class="fas fa-helmet-safety me-2"></i>Accessori
+            </a>
         </div>
-    }
+    </div>
+}
 
-    <main role="main" class="container pb-5">
-        @RenderBody()
-    </main>
-</div>
+<main role="main" class="container pb-5">
+    @RenderBody()
+</main>
 
 <footer class="text-center small text-muted py-2">
     <div class="container">
@@ -177,6 +185,7 @@
     </div>
 </footer>
 
+<!-- JS -->
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>

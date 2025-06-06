@@ -181,6 +181,14 @@ public class GestioneDati
         return i;
     }
     
+    /*public Item RecuperaProdottoPerID(int idProdotto, int idCategoria)
+    {
+        // Recupera tutti i prodotti della categoria
+        List<Item> prodotti = RecuperaTuttiIProdottiDiUnaCategoria(idCategoria);
+
+        // Cerca il prodotto specifico
+        return prodotti.FirstOrDefault(p => p.ID_prodotto == idProdotto);
+    }*/
 
     public bool InserisciUtente(string username, string password, string indirizzo)
     {
@@ -581,18 +589,134 @@ public class GestioneDati
     }
 }
     
-    /*
-    public List<OrdineStatisticaViewModel> ElencoOrdini(List<OrdineProdotto> listaOrdini)
+    public bool AggiornaMoto(Item moto)
     {
-        var ordini = listaOrdini;
-
-        var cmd = new MySqlCommand("SELECT DISTINCT id_ordine FROM ordine_prodotto", con);
-        using var reader = cmd.ExecuteReader();
-        while (reader.Read())
+        try
         {
-            ordini.Add(new OrdineProdotto { ID_ordine = reader.GetInt32(0) });
+            string query = @"UPDATE moto SET marca=@marca, modello=@modello, cilindrata=@cilindrata, descrizione=@descrizione, prezzo=@prezzo, foto=@foto WHERE ID_prodotto=@id";
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@marca", moto.marca);
+            cmd.Parameters.AddWithValue("@modello", moto.modello);
+            cmd.Parameters.AddWithValue("@cilindrata", moto.cilindrata);
+            cmd.Parameters.AddWithValue("@descrizione", moto.descrizione);
+            cmd.Parameters.AddWithValue("@prezzo", moto.prezzo);
+            cmd.Parameters.AddWithValue("@foto", moto.foto);
+            cmd.Parameters.AddWithValue("@id", moto.ID_prodotto);
+            return cmd.ExecuteNonQuery() > 0;
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Errore aggiornamento moto: " + ex.Message);
+            return false;
+        }
+    }
+    
+    public bool AggiornaAbbigliamento(Item abbigliamento)
+    {
+        try
+        {
+            string query = @"UPDATE abbigliamento SET 
+                         tipo_vestiario = @tipo,
+                         colore = @colore,
+                         materiale = @materiale,
+                         descrizione = @descrizione,
+                         prezzo = @prezzo,
+                         foto = @foto
+                         WHERE ID_prodotto = @id";
+
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@tipo", abbigliamento.tipo_vestiario);
+            cmd.Parameters.AddWithValue("@colore", abbigliamento.colore);
+            cmd.Parameters.AddWithValue("@materiale", abbigliamento.materiale);
+            cmd.Parameters.AddWithValue("@descrizione", abbigliamento.descrizione);
+            cmd.Parameters.AddWithValue("@prezzo", abbigliamento.prezzo);
+            cmd.Parameters.AddWithValue("@foto", abbigliamento.foto);
+            cmd.Parameters.AddWithValue("@id", abbigliamento.ID_prodotto);
+
+            return cmd.ExecuteNonQuery() > 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore aggiornamento abbigliamento: " + ex.Message);
+            return false;
+        }
+    }
+
+    public bool AggiornaAccessorio(Item accessorioModificato)
+    {
+        try
+        {
+            string query = @"UPDATE accessori 
+                         SET tipo = @tipo, 
+                             compatibilita = @compatibilita, 
+                             descrizione = @descrizione, 
+                             prezzo = @prezzo, 
+                             foto = @foto 
+                         WHERE ID_prodotto = @id";
+
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@tipo", accessorioModificato.tipo);
+            cmd.Parameters.AddWithValue("@compatibilita", accessorioModificato.compatibilita);
+            cmd.Parameters.AddWithValue("@descrizione", accessorioModificato.descrizione);
+            cmd.Parameters.AddWithValue("@prezzo", accessorioModificato.prezzo);
+            cmd.Parameters.AddWithValue("@foto", accessorioModificato.foto);
+            cmd.Parameters.AddWithValue("@id", accessorioModificato.ID_prodotto);
+
+            return cmd.ExecuteNonQuery() > 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore aggiornamento accessorio: " + ex.Message);
+            return false;
+        }
+    }
+    public List<Order> GetOrders()
+    {
+        var orders = new List<Order>();
+        var query = "SELECT id_ordine, utente, indirizzo, mail FROM ordine";
+        MySqlCommand cmd = new MySqlCommand(query, con);
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    orders.Add(new Order
+                    {
+                        IdOrdine = (int)reader["id_ordine"],
+                        Utente = reader["utente"].ToString(),
+                        Indirizzo = reader["indirizzo"].ToString(),
+                        Mail = reader["mail"].ToString()
+                    });
+                }
+            }
+        return orders;
+    }
+    
+    public List<RigaDettaglioOrdine> GetDettagliOrdine(int idOrdine)
+    {
+        var dettagli = new List<RigaDettaglioOrdine>();
+        
+        string query = "SELECT id_ordine, id_prodotto, id_categoria, quantita FROM ordine_prodotto WHERE id_ordine = @idOrdine";
+        
+        using (var command = new MySqlCommand(query, con))
+        {
+            command.Parameters.AddWithValue("@idOrdine", idOrdine);
+            
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    dettagli.Add(new RigaDettaglioOrdine
+                    {
+                        IdOrdine = reader.GetInt32(0),
+                        IdProdotto = reader.GetInt32(1),
+                        IdCategoria = reader.GetInt32(2),
+                        Quantita = reader.GetInt32(3)
+                    });
+                }
+            }
         }
 
-        return ordini;
-    }*/
+        return dettagli;
+    }
+
 }
